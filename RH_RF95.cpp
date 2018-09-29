@@ -407,10 +407,10 @@ void RH_RF95::setSpreadingFactor(int8_t sf)
   }
 
   if (sf == 6) {
-    spiWrite(RH_RF95_REG_31_DETECTION_OPTIMIZE, 0xc5);
+    spiWrite(RH_RF95_REG_31_DETECT_OPTIMIZ, 0xc5);
     spiWrite(RH_RF95_REG_37_DETECTION_THRESHOLD, 0x0c);
   } else {
-    spiWrite(RH_RF95_REG_31_DETECTION_OPTIMIZE, 0xc3);
+    spiWrite(RH_RF95_REG_31_DETECT_OPTIMIZ, 0xc3);
     spiWrite(RH_RF95_REG_37_DETECTION_THRESHOLD, 0x0a);
   }
 
