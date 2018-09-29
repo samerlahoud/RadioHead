@@ -723,7 +723,10 @@ public:
     /// \param[in] useRFO If true, enables the use of the RFO transmitter pins instead of
     /// the PA_BOOST pin (false). Choose the correct setting for your module.
     void           setTxPower(int8_t power, bool useRFO = false);
-
+    void           setSpreadingFactor(int8_t sf);
+    void           setSignalBandwidth(long sbw);
+    void           setCodingRate4(int8_t denominator);
+    void           setSyncWord(int sw);
     /// Sets the radio into low-power sleep mode.
     /// If successful, the transport will stay in sleep mode until woken by 
     /// changing mode it idle, transmit or receive (eg by calling send(), recv(), available() etc)
