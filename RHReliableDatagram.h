@@ -16,6 +16,7 @@
 
 /// the default retry timeout in milliseconds
 #define RH_DEFAULT_TIMEOUT 200
+#define RH_LONG_TIMEOUT 12000
 
 /// The default number of retries
 #define RH_DEFAULT_RETRIES 3
