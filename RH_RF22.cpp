@@ -1,7 +1,7 @@
 // RH_RF22.cpp
 //
 // Copyright (C) 2011 Mike McCauley
-// $Id: RH_RF22.cpp,v 1.28 2017/11/06 00:04:08 mikem Exp $
+// $Id: RH_RF22.cpp,v 1.31 2019/09/02 05:21:52 mikem Exp $
 
 #include <RH_RF22.h>
 
@@ -96,11 +96,17 @@ bool RH_RF22::init()
     if (   _deviceType != RH_RF22_DEVICE_TYPE_RX_TRX
         && _deviceType != RH_RF22_DEVICE_TYPE_TX)
     {
-//	Serial.println("unknown device type");
+//	Serial.print("unknown device type: ");
 //	Serial.println(_deviceType);
 	return false;
     }
 
+    // Issue software reset to get all registers to default state
+    spiWrite(RH_RF22_REG_07_OPERATING_MODE1, RH_RF22_SWRES);
+    // Wait for chip ready
+    while (!(spiRead(RH_RF22_REG_04_INTERRUPT_STATUS2) & RH_RF22_ICHIPRDY))
+	;
+    
     // Add by Adrien van den Bossche <vandenbo@univ-tlse2.fr> for Teensy
     // ARM M4 requires the below. else pin interrupt doesn't work properly.
     // On all other platforms, its innocuous, belt and braces
@@ -303,17 +309,17 @@ void RH_RF22::handleInterrupt()
 // These are low level functions that call the interrupt handler for the correct
 // instance of RH_RF22.
 // 3 interrupts allows us to have 3 different devices
-void RH_RF22::isr0()
+void RH_INTERRUPT_ATTR RH_RF22::isr0()
 {
     if (_deviceForInterrupt[0])
 	_deviceForInterrupt[0]->handleInterrupt();
 }
-void RH_RF22::isr1()
+void RH_INTERRUPT_ATTR RH_RF22::isr1()
 {
     if (_deviceForInterrupt[1])
 	_deviceForInterrupt[1]->handleInterrupt();
 }
-void RH_RF22::isr2()
+void RH_INTERRUPT_ATTR RH_RF22::isr2()
 {
     if (_deviceForInterrupt[2])
 	_deviceForInterrupt[2]->handleInterrupt();
