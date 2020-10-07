@@ -7,7 +7,7 @@
 //
 // Author: Philippe.Rochat'at'gmail.com
 // Contributed to the RadioHead project by the author
-// $Id: RHEncryptedDriver.h,v 1.3 2018/09/23 23:54:01 mikem Exp $
+// $Id: RHEncryptedDriver.h,v 1.4 2020/07/05 08:52:21 mikem Exp $
 
 #ifndef RHEncryptedDriver_h
 #define RHEncryptedDriver_h
@@ -244,5 +244,8 @@ private:
 /// @example serial_encrypted_reliable_datagram_server.pde
 
 
+#else // RH_ENABLE_ENCRYPTION_MODULE
+#error "You have included RHEncryptedDriver.h, but not enabled RH_ENABLE_ENCRYPTION_MODULE in RadioHead.h"
 #endif
+
 #endif
